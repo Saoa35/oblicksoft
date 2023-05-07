@@ -1,0 +1,121 @@
+.App {
+  text-align: center;
+  background-color: rgba(192, 197, 197, 0.163);
+  height: 100vh;
+
+  header {
+    width: 100%;
+    background-color: rgb(205, 208, 211);
+
+    .Sidebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px;
+
+      .buttons {
+        display: flex;
+
+        button {
+          margin: 0 5%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 50px;
+          border-radius: 4px;
+          cursor: pointer;
+
+          @media (max-width: 426px) {
+            margin: 0 2%;
+            width: 35px;
+          }
+
+          @media (max-width: 426px) {
+            margin: 0 2%;
+            width: 35px;
+          }
+
+          @media (max-width: 380px) {
+            margin: 0 2%;
+            width: 30px;
+          }
+
+          @media (max-width: 340px) {
+            margin: 0 1%;
+            width: 28px;
+          }
+        }
+      }
+
+      .SearchBox {
+        background-color: white;
+        width: 25%;
+        height: 4vh;
+        border-radius: 5px;
+        position: relative;
+
+        @media (max-width: 425px) {
+          .SearchBox {
+            width: 40%;
+          }
+        }
+
+        .search-icon {
+          position: absolute;
+          top: 50%;
+          left: 40%;
+          transform: translateY(-50%);
+
+          @media (max-width: 1024px) {
+            left: 35%;
+          }
+
+          @media (max-width: 768px) {
+            left: 30%;
+          }
+
+          @media (max-width: 376px) {
+            left: 28%;
+          }
+
+          @media (max-width: 330px) {
+            left: 23%;
+          }
+        }
+
+        .search-icon.hidden {
+          display: none;
+        }
+
+        input {
+          border: none;
+          outline: none;
+          width: 95%;
+          height: 100%;
+          text-align: center;
+        }
+
+        @media (max-width: 426px) {
+          width: 45%;
+        }
+      }
+    }
+  }
+
+  main {
+    display: flex;
+
+    .ListItem {
+      width: 30%;
+      background-color: rgb(243, 243, 241);
+      height: 100vh;
+      overflow-y: scroll;
+    }
+
+    .Workspace {
+      width: 70%;
+      background-color: #efeeee;
+      height: 100vh;
+    }
+  }
+}
