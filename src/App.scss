@@ -110,12 +110,51 @@
       background-color: rgb(243, 243, 241);
       height: 100vh;
       overflow-y: scroll;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 5% 10%;
+        text-align: left;
+        cursor: pointer;
+
+        .title {
+          font-weight: bold;
+        }
+
+        .text {
+          display: flex;
+          align-items: center;
+
+          span:first-child {
+            white-space: nowrap;
+            margin-right: 4%;
+          }
+        }
+
+        .truncated {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
     }
 
     .Workspace {
       width: 70%;
       background-color: #efeeee;
       height: 100vh;
+
+      .content {
+        margin-left: 5%;
+        margin-right: 5%;
+
+        .text-area {
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+        }
+      }
     }
   }
 }
