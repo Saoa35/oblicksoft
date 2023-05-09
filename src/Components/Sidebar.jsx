@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Context } from "../App";
 
 const plus = (
   <svg
@@ -79,8 +80,8 @@ const Button = ({ icon }) => {
 };
 
 const SearchBox = () => {
-  const [search, setSearch] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const { searchValue, setSearchValue } = useContext(Context);
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -90,9 +91,13 @@ const SearchBox = () => {
     setIsFocused(false);
   };
 
+  const isInputEmpty = searchValue !== "";
+
   return (
     <div className="SearchBox">
-      <span className={`search-icon ${isFocused ? "hidden" : ""}`}>
+      <span
+        className={`search-icon ${isFocused || isInputEmpty ? "hidden" : ""}`}
+      >
         <svg
           width="15px"
           height="15px"
@@ -112,8 +117,8 @@ const SearchBox = () => {
       </span>
       <input
         placeholder="Search"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
         onFocus={handleFocus}
         onBlur={handleBlur}
       />

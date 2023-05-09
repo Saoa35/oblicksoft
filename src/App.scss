@@ -149,10 +149,33 @@
         margin-left: 5%;
         margin-right: 5%;
 
-        .text-area {
+        p {
+          color: rgb(168, 168, 168);
+        }
+
+        .text-field {
           text-align: left;
           display: flex;
           flex-direction: column;
+
+          input {
+            border: none;
+            outline: none;
+            margin-bottom: 3%;
+            background-color: transparent;
+            font-size: 1em;
+            font-family: cursive;
+          }
+
+          textarea {
+            border: none;
+            outline: none;
+            height: 75vh;
+            background-color: transparent;
+            line-height: 1.3em;
+            font-size: 0.9em;
+            font-family: cursive;
+          }
         }
       }
     }

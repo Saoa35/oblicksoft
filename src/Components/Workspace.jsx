@@ -1,52 +1,44 @@
-import React, { useState } from "react";
-// import ReactMarkdown from "react-markdown";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { Context } from "../App";
 
 export const Workspace = () => {
-  const { notes } = useContext(Context);
-  const [noteData, setNoteData] = useState(notes);
+  const { notes, selectedNoteId } = useContext(Context);
+  const [noteData, setNoteData] = useState(null);
 
-  const handleTitleChange = (event, id) => {
-    const updatedNotes = noteData.map((el) => {
-      if (el.id === id) {
-        return { ...el, title: event.target.value };
-      }
-      return el;
-    });
-    setNoteData(updatedNotes);
+  useEffect(() => {
+    if (selectedNoteId !== null) {
+      setNoteData(notes.find((note) => note.id === selectedNoteId));
+    }
+  }, [notes, selectedNoteId]);
+
+  const handleTitleChange = (event) => {
+    const updatedNoteData = { ...noteData, title: event.target.value };
+    setNoteData(updatedNoteData);
   };
 
-  const handleTextNoteChange = (event, id) => {
-    const updatedNotes = noteData.map((el) => {
-      if (el.id === id) {
-        return { ...el, textnote: event.target.value };
-      }
-      return el;
-    });
-    setNoteData(updatedNotes);
+  const handleTextNoteChange = (event) => {
+    const updatedNoteData = { ...noteData, textnote: event.target.value };
+    setNoteData(updatedNoteData);
   };
+
+  if (selectedNoteId === null || noteData === null) {
+    return null;
+  }
 
   return (
     <div className="Workspace">
-      {noteData.map((el) => {
-        return (
-          <div key={el.id} className="content">
-            <h3>{el.date + " " + el.time}</h3>
-            <div className="text-area">
-              <input
-                type="text"
-                value={el.title}
-                onChange={(event) => handleTitleChange(event, el.id)}
-              />
-              <textarea
-                value={el.textnote}
-                onChange={(event) => handleTextNoteChange(event, el.id)}
-              />
-            </div>
-          </div>
-        );
-      })}
+      <div className="content">
+        <p>{noteData.date + " " + noteData.time}</p>
+        <div className="text-field">
+          <input
+            type="text"
+            value={noteData.title}
+            onChange={handleTitleChange}
+          />
+          <textarea value={noteData.textnote} onChange={handleTextNoteChange} />
+        </div>
+      </div>
     </div>
   );
 };

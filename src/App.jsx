@@ -14,18 +14,25 @@ const data = [
     time: "12:17 PM",
   },
   {
-    title: "Why do we use it",
+    title: "Do we use it, why",
     textnote:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
     date: "June 8, 2017 at",
     time: "09:05 AM",
   },
   {
-    title: "Where does it come from",
+    title: "It come from, where does",
     textnote:
       "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.",
     date: "February 18, 2016 at",
     time: "06:38 PM",
+  },
+  {
+    title: "Can I get some, where",
+    textnote:
+      "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+    date: "September 10, 2015 at",
+    time: "11:20 AM",
   },
 ];
 
@@ -33,14 +40,21 @@ export const Context = createContext();
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const [selectedNoteId, setSelectedNoteId] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const request = indexedDB.open("myDatabase", 1);
+        const request = indexedDB.open("myDatabase", 2);
 
         request.onupgradeneeded = (event) => {
           const db = event.target.result;
+
+          if (db.objectStoreNames.contains("notes")) {
+            db.deleteObjectStore("notes");
+          }
+
           const objectStore = db.createObjectStore("notes", {
             keyPath: "id",
             autoIncrement: true,
@@ -86,7 +100,15 @@ function App() {
 
   return (
     <div className="App">
-      <Context.Provider value={{ notes }}>
+      <Context.Provider
+        value={{
+          notes,
+          selectedNoteId,
+          setSelectedNoteId,
+          searchValue,
+          setSearchValue,
+        }}
+      >
         <header>
           <Sidebar />
         </header>
