@@ -3,8 +3,13 @@ import { useContext } from "react";
 import { Context } from "../App";
 
 export const Workspace = () => {
-  const { notes, selectedNoteId } = useContext(Context);
+  const { notes, setNotes, selectedNoteId, isEditing, isEditingEnabled } =
+    useContext(Context);
   const [noteData, setNoteData] = useState(null);
+
+  const selectedNote = notes.find((note) => note.id === selectedNoteId);
+
+  const isEditable = selectedNoteId !== null && isEditingEnabled;
 
   useEffect(() => {
     if (selectedNoteId !== null) {
@@ -14,18 +19,22 @@ export const Workspace = () => {
 
   const handleTitleChange = (event) => {
     const newTitle = event.target.value;
-    setNoteData((prevNoteData) => ({
-      ...prevNoteData,
-      title: newTitle,
-    }));
+
+    setNotes((prevNotes) =>
+      prevNotes.map((note) =>
+        note.id === selectedNoteId ? { ...note, title: newTitle } : note
+      )
+    );
   };
 
-  const handleTextNoteChange = (event) => {
-    const newTextNote = event.target.value;
-    setNoteData((prevNoteData) => ({
-      ...prevNoteData,
-      textnote: newTextNote,
-    }));
+  const handleContentChange = (event) => {
+    const newContent = event.target.value;
+
+    setNotes((prevNotes) =>
+      prevNotes.map((note) =>
+        note.id === selectedNoteId ? { ...note, textnote: newContent } : note
+      )
+    );
   };
 
   if (selectedNoteId === null || noteData === null) {
@@ -38,11 +47,18 @@ export const Workspace = () => {
         <p>{noteData.date + " " + noteData.time}</p>
         <div className="text-field">
           <input
+            readOnly={!isEditable}
             type="text"
-            value={noteData.title}
+            value={selectedNote.title}
             onChange={handleTitleChange}
+            disabled={!isEditing}
           />
-          <textarea value={noteData.textnote} onChange={handleTextNoteChange} />
+          <textarea
+            readOnly={!isEditable}
+            value={selectedNote.textnote}
+            onChange={handleContentChange}
+            disabled={!isEditing}
+          />
         </div>
       </div>
     </div>

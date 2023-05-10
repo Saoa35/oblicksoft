@@ -4,6 +4,7 @@ import { ListItem } from "./Components/ListItem";
 import { Sidebar } from "./Components/Sidebar";
 import { Workspace } from "./Components/Workspace";
 import "./App.scss";
+import { ModalDelete } from "./Components/ModalDelete";
 
 const data = [
   {
@@ -46,6 +47,16 @@ function App() {
   const [showNewContent, setShowNewContent] = useState(false);
   const [newNoteId, setNewNoteId] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingEnabled, setIsEditingEnabled] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = () => {
+    setIsEditing(false);
+  };
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -53,6 +64,12 @@ function App() {
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleDeleteNote = (id) => {
+    setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+    setSelectedNoteId(null);
+    setIsSelected(false);
   };
 
   const handleAddContent = () => {
@@ -129,6 +146,7 @@ function App() {
       <Context.Provider
         value={{
           notes,
+          setNotes,
           selectedNoteId,
           setSelectedNoteId,
           searchValue,
@@ -140,6 +158,15 @@ function App() {
           newNoteId,
           setNewNoteId,
           handleOpenModal,
+          handleCloseModal,
+          handleDeleteNote,
+          setShowNewContent,
+          setIsEditing,
+          handleEditClick,
+          handleSaveClick,
+          isEditing,
+          isEditingEnabled,
+          setIsEditingEnabled,
         }}
       >
         <header>
@@ -149,6 +176,7 @@ function App() {
           <ListItem />
           <Workspace />
         </main>
+        {showModal && <ModalDelete />}
       </Context.Provider>
     </div>
   );
