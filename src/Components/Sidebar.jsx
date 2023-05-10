@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Context } from "../App";
 
 export const Sidebar = () => {
-  const { isSelected, handleAddContent } = useContext(Context);
+  const { isSelected, handleAddContent, handleOpenModal } = useContext(Context);
 
   const basketStrokeColor = isSelected ? "#000000" : "#838383";
   const editStrokeColor = isSelected ? "#000000" : "#838383";
@@ -76,10 +76,20 @@ export const Sidebar = () => {
 
   const Button = ({ icon }) => {
     const handleClick = () => {
-      if (icon === plus) {
+      if (icon === basket && isSelected) {
+        handleOpenModal();
+      } else if (icon === plus) {
         handleAddContent();
       }
     };
+
+    // // const handleClick = () => {
+
+    // if (icon === plus) {
+    //   handleAddContent();
+    // }
+    // // };
+
     return <button onClick={handleClick}>{icon}</button>;
   };
 

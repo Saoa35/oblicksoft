@@ -45,19 +45,28 @@ function App() {
   const [isSelected, setIsSelected] = useState(false);
   const [showNewContent, setShowNewContent] = useState(false);
   const [newNoteId, setNewNoteId] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   const handleAddContent = () => {
     const newId = Math.random().toString(36).substr(2, 9);
-    setNotes((prevNotes) => [
-      ...prevNotes,
-      {
-        id: newId,
-        title: "Your Note Theme",
-        time: "TIME",
-        textnote: "Your Note Text",
-      },
-    ]);
+    const newNote = {
+      id: newId,
+      title: "Your Note Theme",
+      date: "New Date",
+      time: "New Time",
+      textnote: "Your Note Text",
+    };
+    setNotes((prevNotes) => [newNote, ...prevNotes]);
     setNewNoteId(newId);
+    setSelectedNoteId(null);
   };
 
   useEffect(() => {
@@ -130,6 +139,7 @@ function App() {
           handleAddContent,
           newNoteId,
           setNewNoteId,
+          handleOpenModal,
         }}
       >
         <header>
