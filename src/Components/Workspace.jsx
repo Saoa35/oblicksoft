@@ -13,13 +13,19 @@ export const Workspace = () => {
   }, [notes, selectedNoteId]);
 
   const handleTitleChange = (event) => {
-    const updatedNoteData = { ...noteData, title: event.target.value };
-    setNoteData(updatedNoteData);
+    const newTitle = event.target.value;
+    setNoteData((prevNoteData) => ({
+      ...prevNoteData,
+      title: newTitle,
+    }));
   };
 
   const handleTextNoteChange = (event) => {
-    const updatedNoteData = { ...noteData, textnote: event.target.value };
-    setNoteData(updatedNoteData);
+    const newTextNote = event.target.value;
+    setNoteData((prevNoteData) => ({
+      ...prevNoteData,
+      textnote: newTextNote,
+    }));
   };
 
   if (selectedNoteId === null || noteData === null) {

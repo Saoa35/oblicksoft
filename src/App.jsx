@@ -42,6 +42,23 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [selectedNoteId, setSelectedNoteId] = useState(null);
   const [searchValue, setSearchValue] = useState("");
+  const [isSelected, setIsSelected] = useState(false);
+  const [showNewContent, setShowNewContent] = useState(false);
+  const [newNoteId, setNewNoteId] = useState(null);
+
+  const handleAddContent = () => {
+    const newId = Math.random().toString(36).substr(2, 9);
+    setNotes((prevNotes) => [
+      ...prevNotes,
+      {
+        id: newId,
+        title: "Your Note Theme",
+        time: "TIME",
+        textnote: "Your Note Text",
+      },
+    ]);
+    setNewNoteId(newId);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,6 +124,12 @@ function App() {
           setSelectedNoteId,
           searchValue,
           setSearchValue,
+          isSelected,
+          setIsSelected,
+          showNewContent,
+          handleAddContent,
+          newNoteId,
+          setNewNoteId,
         }}
       >
         <header>
